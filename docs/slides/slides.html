@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PaperHawk — AMD Developer Hackathon Slide Deck</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --amd-red: #ED1C24;
+      --amd-orange: #FB6624;
+      --paperhawk-black: #1A1A1A;
+      --paperhawk-gold: #D4A857;
+      --qwen-purple: #7C3AED;
+      --bg-light: #FFFFFF;
+      --bg-cream: #FFF6E5;
+      --bg-purple-light: #F5EFFF;
+      --text-dark: #1A1A1A;
+      --text-muted: #6B6B6B;
+      --text-light: #FFFFFF;
+      --border-soft: rgba(0, 0, 0, 0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      color: var(--text-dark);
+      background: #E5E5E5;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .slide {
+      width: 1280px;
+      height: 720px;
+      padding: 64px 80px 64px 80px;
+      background: white;
+      position: relative;
+      overflow: hidden;
+      page-break-after: always;
+      margin: 30px auto;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.12);
+    }
+
+    /* Top gradient bar — AMD red → orange → Qwen purple */
+    .slide::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--amd-red) 0%, var(--amd-orange) 50%, var(--qwen-purple) 100%);
+      z-index: 5;
+    }
+
+    .slide-label {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      color: var(--amd-red);
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .slide-title {
+      font-size: 56px;
+      font-weight: 800;
+      line-height: 1.08;
+      color: var(--text-dark);
+      margin-bottom: 18px;
+      letter-spacing: -0.01em;
+    }
+    .slide-title .accent { color: var(--amd-red); }
+    .slide-title .qwen-accent { color: var(--qwen-purple); }
+
+    .slide-subtitle {
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--text-muted);
+      max-width: 980px;
+      line-height: 1.4;
+    }
+
+    .slide-footer {
+      position: absolute;
+      bottom: 28px;
+      left: 80px; right: 80px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* === Slide 1: Cover === */
+    .slide-cover {
+      background: var(--paperhawk-black);
+      color: var(--text-light);
+      padding: 64px 80px;
+    }
+    .slide-cover .slide-label { color: var(--amd-orange); }
+    .slide-cover .hawk-image {
+      width: 100%;
+      max-height: 280px;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 6px;
+      margin-bottom: 32px;
+      filter: brightness(0.92) contrast(1.06);
+    }
+    .slide-cover .slide-title {
+      color: white;
+      font-size: 80px;
+      margin-bottom: 12px;
+    }
+    .slide-cover .slide-title .accent { color: var(--amd-orange); }
+    .slide-cover .slide-subtitle {
+      color: rgba(255,255,255,0.85);
+      font-size: 20px;
+      max-width: 800px;
+    }
+    .slide-cover .meta {
+      position: absolute;
+      bottom: 56px;
+      left: 80px; right: 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      font-size: 13px;
+      color: rgba(255,255,255,0.55);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .slide-cover .meta-team {
+      display: flex; gap: 28px;
+      font-family: 'Inter', sans-serif;
+    }
+    .slide-cover .meta-team strong {
+      color: white;
+      font-weight: 600;
+    }
+
+    /* === Slide 2: The Problem (split contrast) === */
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      margin-top: 44px;
+    }
+    .problem-card {
+      padding: 28px;
+      border-radius: 8px;
+    }
+    .problem-card.left {
+      background: var(--bg-cream);
+      border-left: 5px solid var(--amd-red);
+    }
+    .problem-card.right {
+      background: var(--paperhawk-black);
+      color: white;
+    }
+    .problem-card h3 {
+      font-size: 18px;
+      margin-bottom: 14px;
+      letter-spacing: 0.02em;
+    }
+    .problem-card.left h3 { color: var(--amd-red); }
+    .problem-card.right h3 { color: var(--amd-orange); }
+    .problem-card p {
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+    .problem-card.right p:last-child {
+      color: rgba(255,255,255,0.62);
+      font-size: 14px;
+    }
+    .problem-card.left p:last-child {
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    /* === Stat grid (slide 3) === */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+      margin-top: 44px;
+    }
+    .stat-card {
+      background: var(--bg-cream);
+      border-left: 4px solid var(--amd-red);
+      padding: 24px 20px;
+      border-radius: 4px;
+    }
+    .stat-card .stat-value {
+      font-size: 44px;
+      font-weight: 800;
+      color: var(--amd-red);
+      line-height: 1;
+      margin-bottom: 10px;
+      letter-spacing: -0.02em;
+    }
+    .stat-card .stat-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-dark);
+      line-height: 1.3;
+    }
+
+    /* === Pipeline ribbon (slide 4) === */
+    .pipeline-ribbon {
+      display: flex;
+      gap: 3px;
+      margin-top: 40px;
+    }
+    .pipeline-step {
+      flex: 1;
+      padding: 24px 20px;
+      color: white;
+      position: relative;
+    }
+    .pipeline-step:nth-child(1) { background: #ED1C24; }
+    .pipeline-step:nth-child(2) { background: #ED4426; }
+    .pipeline-step:nth-child(3) { background: #ED6628; }
+    .pipeline-step:nth-child(4) { background: #ED882A; }
+    .pipeline-step:nth-child(5) { background: #FB6624; }
+    .pipeline-step .step-num {
+      width: 28px; height: 28px;
+      background: white;
+      color: var(--amd-red);
+      border-radius: 50%;
+      font-weight: 800;
+      font-size: 14px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 14px;
+    }
+    .pipeline-step .step-name {
+      font-size: 19px; font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+    .pipeline-step .step-desc {
+      font-size: 12px;
+      opacity: 0.92;
+      line-height: 1.45;
+    }
+
+    /* === Domain checks (slide 5) === */
+    .domain-categories {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 36px;
+    }
+    .domain-cat {
+      padding: 22px;
+      border-radius: 6px;
+      border-top: 4px solid;
+    }
+    .domain-cat.tier-a { border-top-color: var(--amd-red); background: var(--bg-cream); }
+    .domain-cat.tier-b { border-top-color: var(--amd-orange); background: #FFF1E0; }
+    .domain-cat.tier-c { border-top-color: var(--qwen-purple); background: var(--bg-purple-light); }
+    .domain-cat h3 {
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      font-weight: 700;
+    }
+    .domain-cat.tier-a h3 { color: var(--amd-red); }
+    .domain-cat.tier-b h3 { color: var(--amd-orange); }
+    .domain-cat.tier-c h3 { color: var(--qwen-purple); }
+    .domain-cat ul {
+      list-style: none;
+      font-size: 12.5px;
+    }
+    .domain-cat li {
+      padding: 7px 0;
+      border-bottom: 1px solid var(--border-soft);
+      line-height: 1.4;
+    }
+    .domain-cat li:last-child { border-bottom: none; }
+    .domain-cat strong { font-weight: 600; color: var(--text-dark); }
+
+    /* === Anti-halluc layers (slide 6) === */
+    .layers {
+      display: flex; flex-direction: column;
+      gap: 7px;
+      margin-top: 16px;
+    }
+    .layer {
+      padding: 12px 18px;
+      background: var(--bg-cream);
+      border-left: 4px solid var(--amd-red);
+      border-radius: 4px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .layer.plus-one {
+      background: var(--bg-purple-light);
+      border-left-color: var(--qwen-purple);
+    }
+    .layer-num {
+      width: 24px; height: 24px;
+      background: var(--amd-red);
+      color: white;
+      font-weight: 700;
+      font-size: 12px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .layer.plus-one .layer-num {
+      background: var(--qwen-purple);
+      width: auto;
+      padding: 0 8px;
+      border-radius: 12px;
+      font-size: 11px;
+    }
+    .layer-text {
+      font-size: 13.5px;
+      font-weight: 500;
+    }
+    .layer-text code {
+      background: white;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      color: var(--qwen-purple);
+      font-weight: 500;
+    }
+
+    .dd-flow {
+      display: flex; flex-direction: column;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .dd-specialists {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+    .dd-specialist {
+      padding: 10px 14px;
+      background: var(--bg-cream);
+      border-left: 3px solid var(--amd-red);
+      border-radius: 4px;
+      font-size: 12.5px;
+      font-weight: 600;
+    }
+    .dd-arrow {
+      text-align: center;
+      font-size: 26px;
+      color: var(--amd-red);
+      line-height: 1;
+      margin: 2px 0;
+    }
+    .dd-supervisor, .dd-synthesizer {
+      padding: 14px 20px;
+      color: white;
+      text-align: center;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .dd-supervisor { background: var(--paperhawk-black); }
+    .dd-synthesizer { background: var(--qwen-purple); }
+
+    .col-header {
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    /* === Stack vertical (slide 7) === */
+    .stack-vertical {
+      display: flex; flex-direction: column;
+      gap: 8px;
+      margin-top: 32px;
+    }
+    .stack-row {
+      padding: 16px 24px;
+      background: var(--bg-cream);
+      border-left: 4px solid var(--amd-red);
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .stack-row.qwen-row {
+      border-left-color: var(--qwen-purple);
+      background: var(--bg-purple-light);
+    }
+    .stack-row.amd-row {
+      border-left-color: var(--amd-red);
+      background: #FFE4E5;
+    }
+    .stack-row .stack-label {
+      font-weight: 700;
+      font-size: 16px;
+    }
+    .stack-row .stack-detail {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* === Demo cards (slide 8) === */
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 32px;
+    }
+    .demo-card {
+      padding: 24px;
+      background: var(--bg-cream);
+      border-radius: 6px;
+      border-top: 4px solid var(--amd-red);
+    }
+    .demo-card h3 {
+      font-size: 18px;
+      margin-bottom: 12px;
+      color: var(--amd-red);
+      letter-spacing: -0.01em;
+    }
+    .demo-card p {
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: var(--text-dark);
+    }
+    .demo-card .demo-result {
+      margin-top: 14px;
+      padding: 10px 12px;
+      background: white;
+      border-left: 3px solid var(--qwen-purple);
+      font-size: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      line-height: 1.4;
+    }
+
+    .demo-time-banner {
+      margin-top: 36px;
+      padding: 22px;
+      background: var(--paperhawk-black);
+      color: white;
+      text-align: center;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+    .demo-time-banner strong {
+      color: var(--amd-orange);
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    /* === Built for builders (slide 9) === */
+    .builders-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 44px;
+    }
+    .builders-card {
+      padding: 28px 24px;
+      background: var(--bg-cream);
+      border-radius: 6px;
+      border-top: 4px solid var(--amd-red);
+    }
+    .builders-card .marker {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--amd-red);
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    .builders-card h3 {
+      font-size: 19px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+    .builders-card p {
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: var(--text-muted);
+    }
+    .builders-card p code {
+      background: white;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--qwen-purple);
+    }
+
+    .builders-meta {
+      margin-top: 32px;
+      padding: 18px 24px;
+      background: var(--paperhawk-black);
+      color: white;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      font-size: 12.5px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .builders-meta strong { color: var(--amd-orange); }
+
+    /* === Team cards (slide 10) === */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 32px;
+    }
+    .team-card {
+      padding: 24px;
+      background: var(--bg-cream);
+      border-radius: 6px;
+      border-top: 4px solid var(--amd-red);
+    }
+    .team-card .team-role {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--amd-red);
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+    .team-card .team-name {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+    .team-card .team-desc {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--text-muted);
+    }
+
+    .closing-tagline {
+      margin-top: 28px;
+      padding: 24px;
+      background: var(--paperhawk-black);
+      color: white;
+      text-align: center;
+      border-radius: 6px;
+    }
+    .closing-tagline p {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    .closing-tagline p .accent { color: var(--amd-orange); }
+    .closing-tagline p .qwen-accent { color: var(--qwen-purple); }
+
+    /* === Print mode (Playwright PDF render) === */
+    @page {
+      size: 1280px 720px;
+      margin: 0;
+    }
+    @media print {
+      html, body { background: white; }
+      .slide {
+        margin: 0;
+        box-shadow: none;
+        page-break-after: always;
+      }
+      .slide:last-child { page-break-after: auto; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ========================================================== -->
+<!-- Slide 1: Cover                                              -->
+<!-- ========================================================== -->
+<section class="slide slide-cover">
+  <div class="slide-label">AMD Developer Hackathon × lablab.ai · May 2026</div>
+  <img src="../../paperhawk.jpeg" alt="PaperHawk hero" class="hawk-image">
+  <h1 class="slide-title">Paper<span class="accent">Hawk</span></h1>
+  <p class="slide-subtitle">Multi-agent document intelligence on AMD Instinct MI300X.<br>Built by engineers who ship.</p>
+  <div class="meta">
+    <div class="meta-team">
+      <span><strong>Vince Nándorfi</strong></span>
+      <span><strong>Tamás Vitai</strong></span>
+      <span><strong>Gábor Murcsik</strong></span>
+    </div>
+    <div>Team CsimpiCsirkek · MIT</div>
+  </div>
+</section>
+
+<!-- ========================================================== -->
+<!-- Slide 2: The Problem                                        -->
+<!-- ========================================================== -->
+<section class="slide">
+  <div class="slide-label">The Problem</div>
+  <h1 class="slide-title">RAG <span class="accent">retrieves</span>.<br>Audit <span class="accent">finds</span>.</h1>
+  <p class="slide-subtitle">Today's RAG chatbots can do the first. They cannot do the second.</p>
+  <div class="problem-grid">
+    <div class="problem-card left">
+      <h3>What RAG does well</h3>
+      <p>Chunk a document. Embed the chunks. Retrieve top-K passages. Generate an answer with the retrieved context.</p>
+      <p>Great for FAQ chatbots. Great for Q&amp;A on a single document.</p>
+    </div>
+    <div class="problem-card right">
+      <h3>What auditors actually need</h3>
+      <p>"Does the supplier in Invoice #7 match the vendor in PO #3? Is the VAT rate consistent across the package? Any change-of-control clauses? Sanctions hits?"</p>
+      <p>These questions live in the <em>relationship</em> between documents — not in any single chunk.</p>
+    </div>
+  </div>
+  <div class="slide-footer"><span>02 / 10</span><span>PaperHawk · AMD × lablab.ai</span></div>
+</section>
+
+<!-- ========================================================== -->
+<!-- Slide 3: What We Built                                      -->
+<!-- ========================================================== -->
+<section class="slide">
+  <div class="slide-label">What We Built</div>
+  <h1 class="slide-title">A <span class="accent">multi-agent</span> system.<br>Not a retrieval pipeline.</h1>
+  <p class="slide-subtitle">LangGraph 0.6-native. Production-shaped. Open source under MIT.</p>
+  <div class="stat-grid">
+    <div class="stat-card"><div class="stat-value">4</div><div class="stat-label">Compiled<br>graphs</div></div>
+    <div class="stat-card"><div class="stat-value">6</div><div class="stat-label">Reusable<br>subgraphs</div></div>
+    <div class="stat-card"><div class="stat-value">14</div><div class="stat-label">Deterministic<br>domain checks</div></div>
+    <div class="stat-card"><div class="stat-value">5+1</div><div class="stat-label">Anti-halluc<br>layers</div></div>
+    <div class="stat-card"><div class="stat-value">5</div><div class="stat-label">Agentic<br>chat tools</div></div>
+  </div>
+  <p style="margin-top: 36px; font-size: 14px; color: var(--text-muted); line-height: 1.65;">
+    Send-API parallelism · <code style="background:var(--bg-cream); padding:2px 6px; border-radius:3px; font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--qwen-purple);">AsyncSqliteSaver</code> checkpointer · <code style="background:var(--bg-cream); padding:2px 6px; border-radius:3px; font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--qwen-purple);">configurable_alternatives</code> provider stack (vLLM / Ollama / dummy) · multi-agent DD assistant with 4 specialists + supervisor + synthesizer · Streamlit 5-tab UI · 61 tests passing in CI without an LLM.
+  </p>
+  <div class="slide-footer"><span>03 / 10</span><span>PaperHawk · AMD × lablab.ai</span></div>
+</section>
+
+<!-- ========================================================== -->
+<!-- Slide 4: The Pipeline (5-step)                              -->
+<!-- ========================================================== -->
+<section class="slide">
+  <div class="slide-label">The Pipeline</div>
+  <h1 class="slide-title">Five steps. <span class="accent">End-to-end.</span></h1>
+  <p class="slide-subtitle">Every step is a typed Pydantic-state node. Every LLM call has structured output.</p>
+  <div class="pipeline-ribbon">
+    <div class="pipeline-step">
+      <div class="step-num">1</div>
+      <div class="step-name">Ingest</div>
+      <div class="step-desc">PDF · DOCX · image. Vision-first OCR fallback for scanned pages.</div>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-num">2</div>
+      <div class="step-name">Classify</div>
+      <div class="step-desc">6-way doc-type classifier. ISA 500 evidence-quality score.</div>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-num">3</div>
+      <div class="step-name">Extract</div>
+      <div class="step-desc">Pydantic schema per doc-type. _quotes + _confidence per field.</div>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-num">4</div>
+      <div class="step-name">Cross-ref</div>
+      <div class="step-desc">3-way matching. Package-level analyzer. DD multi-agent.</div>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-num">5</div>
+      <div class="step-name">Risk + Report</div>
+      <div class="step-desc">14 checks (parallel Send) · LLM ensemble · 3-layer filter · DOCX export.</div>
+    </div>
+  </div>
+  <p style="margin-top: 56px; font-size: 14px; color: var(--text-muted); text-align: center; font-style: italic;">
+    On AMD MI300X with Qwen 2.5 14B: <strong style="color:var(--amd-red); font-style: normal;">30–90 seconds</strong> end-to-end per package.
+  </p>
+  <div class="slide-footer"><span>04 / 10</span><span>PaperHawk · AMD × lablab.ai</span></div>
+</section>
+
+<!-- ========================================================== -->
+<!-- Slide 5: The 14 Domain Checks                               -->
+<!-- ========================================================== -->
+<section class="slide">
+  <div class="slide-label">Beyond LLMs · Deterministic Reasoning</div>
+  <h1 class="slide-title">Fourteen rules. <span class="accent">In Python.</span></h1>
+  <p class="slide-subtitle">Every check is a typed Protocol, not a prompt. Run in parallel via the LangGraph Send API.</p>
+  <div class="domain-categories">
+    <div class="domain-cat tier-a">
+      <h3>Tier A — Audit · 6 checks</h3>
+      <ul>
+        <li><strong>ISA 500</strong> Evidence hierarchy</li>
+        <li><strong>ISA 320</strong> Materiality threshold</li>
+        <li><strong>ISA 240</strong> Duplicate invoice detector</li>
+        <li><strong>ISA 240</strong> Rounded-amount anomaly</li>
+        <li><strong>Tax-ID CDV</strong> mod-11 checksum</li>
+        <li><strong>Mandatory fields</strong> Invoice completeness</li>
+      </ul>
+    </div>
+    <div class="domain-cat tier-b">
+      <h3>Tier B — Compliance · 4 checks</h3>
+      <ul>
+        <li><strong>GDPR Art. 28</strong> Sub-processor clause</li>
+        <li><strong>AML / Sanctions</strong> EU + OFAC fuzzy match</li>
+        <li><strong>M&amp;A red flag</strong> Change-of-control · auto-renewal</li>
+        <li><strong>Disproportionality</strong> Penalty-vs-value ratio</li>
+      </ul>
+    </div>
+    <div class="domain-cat tier-c">
+      <h3>Tier C — Standards · 4 checks</h3>
+      <ul>
+        <li><strong>Incoterms 2020</strong> 11-rule recognizer</li>
+        <li><strong>IFRS / GAAP</strong> Goodwill + lease anomaly</li>
+        <li><strong>Math validation</strong> Net + VAT + gross</li>
+        <li><strong>Contract completeness</strong> 6-key-clause check</li>
+      </ul>
+    </div>
+  </div>
+  <p style="margin-top: 28px; font-size: 13px; color: var(--text-muted); text-align: center; font-style: italic;">
+    Jurisdiction-aware: locale-specific rules trigger only on locale-tagged inputs. Universal rules run everywhere.
+  </p>
+  <div class="slide-footer"><span>05 / 10</span><span>PaperHawk · AMD × lablab.ai</span></div>
+</section>
+
+<!-- ========================================================== -->
+<!-- Slide 6: Anti-Hallucination + Multi-Agent DD                -->
+<!-- ========================================================== -->
+<section class="slide">
+  <div class="slide-label">Trust by Design</div>
+  <h1 class="slide-title">Anti-halluc <span class="accent">5+1</span>. DD <span class="qwen-accent">multi-agent</span>.</h1>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 28px;">
+    <div>
+      <div class="col-header" style="color: var(--amd-red);">5+1 layers, every output</div>
+      <div class="layers">
+        <div class="layer"><div class="layer-num">1</div><div class="layer-text"><code>temperature=0</code> on every LLM call</div></div>
+        <div class="layer"><div class="layer-num">2</div><div class="layer-text"><code>_quotes</code> verbatim source citation</div></div>
+        <div class="layer"><div class="layer-num">3</div><div class="layer-text"><code>_confidence</code> per extracted field</div></div>
+        <div class="layer"><div class="layer-num">4</div><div class="layer-text">Plausibility validators (math · dates · ranges)</div></div>
+        <div class="layer"><div class="layer-num">5</div><div class="layer-text">3-layer LLM-risk filter chain</div></div>
+        <div class="layer plus-one"><div class="layer-num">+1</div><div class="layer-text">Quote validator: drops claims whose quotes aren't in the doc</div></div>
+      </div>
+    </div>
+    <div>
+      <div class="col-header" style="color: var(--qwen-purple);">DD supervisor pattern</div>
+      <div class="dd-flow">
+        <div class="dd-specialists">
+          <div class="dd-specialist">Audit specialist</div>
+          <div class="dd-specialist">Legal specialist</div>
+          <div class="dd-specialist">Compliance specialist</div>
+          <div class="dd-specialist">Financial specialist</div>
+        </div>
+        <div class="dd-arrow">↓</div>
+        <div class="dd-supervisor">Supervisor — routing &amp; coordination</div>
+        <div class="dd-arrow">↓</div>
+        <div class="dd-synthesizer">Synthesizer → Executive Summary</div>
+      </div>
+      <p style="font-size: 13px; color: var(--text-muted); margin-top: 18px; line-height: 1.5;">
+        Four specialists read the same package independently. The supervisor coordinates routing. The synthesizer writes a 3-paragraph executive brief with cited red flags.
+      </p>
+    </div>
+  </div>
+  <div class="slide-footer"><span>06 / 10</span><span>PaperHawk · AMD × lablab.ai</span></div>
+</section>
+
+<!-- ========================================================== -->
+<!-- Slide 7: AMD MI300X + Qwen + vLLM                           -->
+<!-- ========================================================== -->
+<section class="slide">
+  <div class="slide-label">The Stack</div>
+  <h1 class="slide-title">Qwen on <span class="accent">AMD MI300X</span> via vLLM.</h1>
+  <p class="slide-subtitle">192 GB HBM3. ROCm-native. Open-source models, end-to-end.</p>
+  <div class="stack-vertical">
+    <div class="stack-row">
+      <div class="stack-label">Streamlit · 5-tab UI</div>
+      <div class="stack-detail">Upload · Results · Chat · DD · Report</div>
+    </div>
+    <div class="stack-row">
+      <div class="stack-label">LangGraph 0.6 orchestration</div>
+      <div class="stack-detail">4 graphs · 6 subgraphs · Send API · AsyncSqliteSaver</div>
+    </div>
+    <div class="stack-row qwen-row">
+      <div class="stack-label">Qwen 2.5 14B Instruct (open source)</div>
+      <div class="stack-detail">tool-calling · structured-output · multilingual</div>
+    </div>
+    <div class="stack-row">
+      <div class="stack-label">vLLM continuous batching</div>
+      <div class="stack-detail">--api-key · --max-model-len 32768 · OpenAI-compatible</div>
+    </div>
+    <div class="stack-row amd-row">
+      <div class="stack-label">AMD Instinct MI300X · ROCm</div>
+      <div class="stack-detail">192 GB HBM3 · BF16 / FP8 · AMD Developer Cloud</div>
+    </div>
+    <div class="stack-row">
+      <div class="stack-label">Hugging Face Spaces deploy</div>
+      <div class="stack-detail">lablab-ai-amd-developer-hackathon · Streamlit SDK</div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>07 / 10</span><span>PaperHawk · AMD × lablab.ai</span></div>
+</section>
+
+<!-- ========================================================== -->
+<!-- Slide 8: Demo Packages                                      -->
+<!-- ========================================================== -->
+<section class="slide">
+  <div class="slide-label">See It In Action</div>
+  <h1 class="slide-title">Three <span class="accent">one-click</span> demos.</h1>
+  <p class="slide-subtitle">Bundled in the repo. Drivable from the Streamlit Upload tab in 30 seconds.</p>
+  <div class="demo-grid">
+    <div class="demo-card">
+      <h3>Audit Demo</h3>
+      <p>Three invoices from the same supplier. The March one is 50% pricier than January and February.</p>
+      <div class="demo-result">→ ISA 240 over-billing pattern flagged with cited line items.</div>
+    </div>
+    <div class="demo-card">
+      <h3>DD Demo</h3>
+      <p>NDA + service agreement + amendment in an acquisition scenario.</p>
+      <div class="demo-result">→ Hidden change-of-control + auto-renewal red flags.</div>
+    </div>
+    <div class="demo-card">
+      <h3>Compliance Demo</h3>
+      <p>Two contracts; one is missing GDPR Article 28 sub-processor language.</p>
+      <div class="demo-result">→ Domain check #8 detects the gap with regulatory citation.</div>
+    </div>
+  </div>
+  <div class="demo-time-banner">
+    On AMD MI300X with Qwen 2.5 14B Instruct: <strong>30–90 seconds</strong> per package · end-to-end · with citations.
+  </div>
+  <div class="slide-footer"><span>08 / 10</span><span>PaperHawk · AMD × lablab.ai</span></div>
+</section>
+
+<!-- ========================================================== -->
+<!-- Slide 9: Built for Builders                                 -->
+<!-- ========================================================== -->
+<section class="slide">
+  <div class="slide-label">Open · Reproducible · Public</div>
+  <h1 class="slide-title">Built <span class="accent">for builders</span>.</h1>
+  <p class="slide-subtitle">MIT licensed. Reproducible from a clean clone. No closed weights, no proprietary extensions.</p>
+  <div class="builders-grid">
+    <div class="builders-card">
+      <div class="marker">/ 01</div>
+      <h3>Open source · MIT</h3>
+      <p>Public GitHub repo. No "training data not included" footnotes. Clone it, run it, fork it. The whole codebase is yours to read.</p>
+    </div>
+    <div class="builders-card">
+      <div class="marker">/ 02</div>
+      <h3>Reproducible</h3>
+      <p>Same stack from laptop to MI300X. <code>infra/vllm/Dockerfile</code> + <code>serve.sh</code> + <code>requirements.txt</code>. One command, one container.</p>
+    </div>
+    <div class="builders-card">
+      <div class="marker">/ 03</div>
+      <h3>Battle-tested</h3>
+      <p>61 tests passing in CI without any LLM. Deterministic dummy provider for CI; vLLM and Ollama for everything else.</p>
+    </div>
+  </div>
+  <div class="builders-meta">
+    <span><strong>github.com/nandorfivince/paperhawk</strong></span>
+    <span style="color: rgba(255,255,255,0.3);">|</span>
+    <span><strong>HF Space:</strong> lablab-ai-amd-developer-hackathon/paperhawk</span>
+    <span style="color: rgba(255,255,255,0.3);">|</span>
+    <span><strong>License:</strong> MIT</span>
+  </div>
+  <div class="slide-footer"><span>09 / 10</span><span>PaperHawk · AMD × lablab.ai</span></div>
+</section>
+
+<!-- ========================================================== -->
+<!-- Slide 10: Team + Closing                                    -->
+<!-- ========================================================== -->
+<section class="slide">
+  <div class="slide-label">The Team</div>
+  <h1 class="slide-title">Three engineers.<br>One <span class="accent">shipped product</span>.</h1>
+  <p class="slide-subtitle">We've shipped together for nearly a decade. PaperHawk is what happens when domain knowledge, engineering rigor, and product instinct meet on the same codebase.</p>
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="team-role">Lead · LangGraph · AMD Adaptation</div>
+      <div class="team-name">Vince Nándorfi</div>
+      <div class="team-desc">System architecture, domain research, ROCm/vLLM adaptation, testing. PaperHawk's blueprint and the AMD-edition rewrite.</div>
+    </div>
+    <div class="team-card">
+      <div class="team-role">Engineering · DevOps</div>
+      <div class="team-name">Tamás Vitai</div>
+      <div class="team-desc">Senior++ engineer. Implementation, infrastructure, integration testing. Where the code meets the runtime.</div>
+    </div>
+    <div class="team-card">
+      <div class="team-role">Engineering · Algorithms</div>
+      <div class="team-name">Gábor Murcsik</div>
+      <div class="team-desc">Engineering rigor. Algorithmic precision. Senior systems thinking, sharpened over years of complex production builds.</div>
+    </div>
+  </div>
+  <div class="closing-tagline">
+    <p>Beyond simple <span class="accent">RAG</span>. Built to <span class="qwen-accent">ship</span>.</p>
+  </div>
+  <div class="slide-footer"><span>10 / 10</span><span>Team CsimpiCsirkek · MIT · github.com/nandorfivince/paperhawk</span></div>
+</section>
+
+</body>
+</html>
