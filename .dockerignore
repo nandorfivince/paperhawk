@@ -1,0 +1,36 @@
+# Git
+.git
+.gitignore
+
+# Env
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+.pytest_cache
+.ruff_cache
+.venv
+venv
+
+# IDE
+.vscode
+.idea
+.DS_Store
+
+# Perzisztens runtime adat (mount-oljuk, ne image-be sütjük)
+chroma_db/
+data/checkpoints.sqlite*
+
+# Tervek és dokumentáció (image-be felesleges)
+tervek/
+dokumentacio/
+
+# Test results
+test_results/
+
+# Node
+node_modules/

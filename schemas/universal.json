@@ -1,0 +1,106 @@
+{
+  "type": "object",
+  "title": "UniversalSchema",
+  "description": "Universal schema for any business document that does not fit one of the 5 specific schemas (e.g. quote, mandate, minutes). flatten_universal maps it to flat field names for the downstream domain checks.",
+  "properties": {
+    "document_type": { "type": ["string", "null"] },
+    "document_language": { "type": "string", "default": "en" },
+    "document_number": { "type": ["string", "null"] },
+    "parties": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": ["string", "null"] },
+          "role": { "type": ["string", "null"] },
+          "tax_id": { "type": ["string", "null"] },
+          "address": { "type": ["string", "null"] },
+          "contact": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "dates": {
+      "type": "object",
+      "properties": {
+        "issue": { "type": ["string", "null"] },
+        "fulfillment": { "type": ["string", "null"] },
+        "payment_due": { "type": ["string", "null"] },
+        "effective": { "type": ["string", "null"] },
+        "expiry": { "type": ["string", "null"] },
+        "signature": { "type": ["string", "null"] },
+        "other_dates": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": { "type": "string" },
+              "date": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "amounts": {
+      "type": "object",
+      "properties": {
+        "total_net": { "type": ["number", "null"] },
+        "total_vat": { "type": ["number", "null"] },
+        "total_gross": { "type": ["number", "null"] },
+        "currency": { "type": "string", "default": "USD" },
+        "vat_rate": { "type": ["number", "null"] }
+      }
+    },
+    "line_items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "item_code": { "type": ["string", "null"] },
+          "description": { "type": ["string", "null"] },
+          "quantity": { "type": ["number", "null"] },
+          "unit": { "type": ["string", "null"] },
+          "unit_price_net": { "type": ["number", "null"] },
+          "vat_rate": { "type": ["number", "null"] },
+          "total_net": { "type": ["number", "null"] },
+          "total_vat": { "type": ["number", "null"] },
+          "total_gross": { "type": ["number", "null"] }
+        }
+      }
+    },
+    "contract_elements": {
+      "type": ["object", "null"],
+      "properties": {
+        "contract_type": { "type": ["string", "null"] },
+        "termination_terms": { "type": ["string", "null"] },
+        "penalty": { "type": ["object", "null"] },
+        "confidentiality_clause": { "type": ["boolean", "null"] },
+        "governing_law": { "type": ["string", "null"] },
+        "key_clauses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "content": { "type": "string" },
+              "risk_level": { "type": "string", "enum": ["low", "medium", "high"] }
+            }
+          }
+        }
+      }
+    },
+    "risk_elements": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "_quotes": { "type": "array", "items": { "type": "string" } },
+    "_confidence": { "type": "object" },
+    "_source": {
+      "type": "object",
+      "properties": {
+        "file_name": { "type": "string" },
+        "page_number": { "type": ["integer", "null"] }
+      }
+    }
+  },
+  "required": ["_quotes", "_confidence"]
+}

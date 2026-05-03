@@ -1,0 +1,58 @@
+[project]
+name = "paperhawk"
+version = "0.1.0"
+description = "Multi-document due diligence platform with agentic LangGraph workflows. Powered by Qwen 2.5 on AMD Instinct MI300X via vLLM. Built for the AMD Developer Hackathon × lablab.ai (May 2026)."
+requires-python = ">=3.12"
+authors = [
+    { name = "Nándorfi Vince" },
+    { name = "Vitai Tamás" },
+    { name = "Murcsik Gábor" },
+]
+license = { text = "MIT" }
+readme = "README.md"
+keywords = [
+    "document-intelligence",
+    "langgraph",
+    "agentic",
+    "rag",
+    "qwen",
+    "amd",
+    "rocm",
+    "vllm",
+    "due-diligence",
+    "audit",
+    "compliance",
+]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Office/Business :: Financial",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "C4", "PIE", "SIM"]
+ignore = [
+    "E501",  # line length (let formatter handle)
+    "N818",  # exception class naming (too aggressive)
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+addopts = ["-ra", "--strict-markers", "--strict-config"]
+markers = [
+    "unit: fast isolated unit tests",
+    "integration: subgraph-level integration tests",
+    "e2e: full pipeline tests with dummy LLM",
+    "e2e_api: 10-group full pipeline tests with real LLM (vLLM/Qwen, ~15-20 min)",
+    "slow: slow tests (real LLM API call)",
+]
+
+[tool.coverage.run]
+source = ["graph", "subgraphs", "nodes", "tools", "providers", "ingest", "store", "schemas", "validation", "utils", "domain_checks"]
+omit = ["*/tests/*", "*/test_data/*"]

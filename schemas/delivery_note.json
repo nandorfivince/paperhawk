@@ -1,0 +1,50 @@
+{
+  "type": "object",
+  "title": "DeliveryNoteSchema",
+  "description": "Structured-extraction schema for delivery notes.",
+  "properties": {
+    "document_number": { "type": ["string", "null"] },
+    "issue_date": { "type": ["string", "null"] },
+    "delivery_date": { "type": ["string", "null"] },
+    "purchase_order_reference": { "type": ["string", "null"], "description": "Related purchase order number (for three-way matching)" },
+    "supplier": {
+      "type": ["object", "null"],
+      "properties": {
+        "name": { "type": ["string", "null"] },
+        "tax_id": { "type": ["string", "null"] },
+        "address": { "type": ["string", "null"] }
+      }
+    },
+    "customer": {
+      "type": ["object", "null"],
+      "properties": {
+        "name": { "type": ["string", "null"] },
+        "tax_id": { "type": ["string", "null"] },
+        "address": { "type": ["string", "null"] }
+      }
+    },
+    "line_items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "item_code": { "type": ["string", "null"] },
+          "description": { "type": ["string", "null"] },
+          "quantity": { "type": ["number", "null"] },
+          "unit": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "notes": { "type": ["string", "null"] },
+    "_quotes": { "type": "array", "items": { "type": "string" } },
+    "_confidence": { "type": "object" },
+    "_source": {
+      "type": "object",
+      "properties": {
+        "file_name": { "type": "string" },
+        "page_number": { "type": ["integer", "null"] }
+      }
+    }
+  },
+  "required": ["_quotes", "_confidence"]
+}

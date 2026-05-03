@@ -1,0 +1,54 @@
+{
+  "type": "object",
+  "title": "PurchaseOrderSchema",
+  "description": "Structured-extraction schema for purchase orders.",
+  "properties": {
+    "document_number": { "type": ["string", "null"] },
+    "date": { "type": ["string", "null"] },
+    "delivery_due_date": { "type": ["string", "null"] },
+    "payment_due_date": { "type": ["string", "null"] },
+    "supplier": {
+      "type": ["object", "null"],
+      "properties": {
+        "name": { "type": ["string", "null"] },
+        "tax_id": { "type": ["string", "null"] },
+        "address": { "type": ["string", "null"] }
+      }
+    },
+    "customer": {
+      "type": ["object", "null"],
+      "properties": {
+        "name": { "type": ["string", "null"] },
+        "tax_id": { "type": ["string", "null"] },
+        "address": { "type": ["string", "null"] }
+      }
+    },
+    "line_items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "item_code": { "type": ["string", "null"] },
+          "description": { "type": ["string", "null"] },
+          "quantity": { "type": ["number", "null"] },
+          "unit": { "type": ["string", "null"] },
+          "unit_price_net": { "type": ["number", "null"] },
+          "total_net": { "type": ["number", "null"] }
+        }
+      }
+    },
+    "total_net": { "type": ["number", "null"] },
+    "total_vat": { "type": ["number", "null"] },
+    "total_gross": { "type": ["number", "null"] },
+    "_quotes": { "type": "array", "items": { "type": "string" } },
+    "_confidence": { "type": "object" },
+    "_source": {
+      "type": "object",
+      "properties": {
+        "file_name": { "type": "string" },
+        "page_number": { "type": ["integer", "null"] }
+      }
+    }
+  },
+  "required": ["_quotes", "_confidence"]
+}

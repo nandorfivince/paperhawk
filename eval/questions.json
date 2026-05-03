@@ -1,0 +1,100 @@
+[
+  {
+    "id": "q01",
+    "category": "list",
+    "question": "How many documents are uploaded and what types are they?",
+    "expected_tools": ["list_documents"],
+    "expected_substrings": ["invoice", "contract"]
+  },
+  {
+    "id": "q02",
+    "category": "list",
+    "question": "List the uploaded files",
+    "expected_tools": ["list_documents"],
+    "expected_substrings": [".pdf"]
+  },
+  {
+    "id": "q03",
+    "category": "extract",
+    "question": "What is the gross total on as-2026-001.pdf?",
+    "expected_tools": ["list_documents", "get_extraction"],
+    "expected_substrings": ["24000", "24,000", "gross", "$"]
+  },
+  {
+    "id": "q04",
+    "category": "extract",
+    "question": "Who issued as-2026-002.pdf?",
+    "expected_tools": ["get_extraction"],
+    "expected_substrings": ["AcmeSoft", "issuer"]
+  },
+  {
+    "id": "q05",
+    "category": "extract",
+    "question": "What is the payment due date on bi-inv-2026-0418.pdf?",
+    "expected_tools": ["get_extraction"],
+    "expected_substrings": ["2026", "due"]
+  },
+  {
+    "id": "q06",
+    "category": "search",
+    "question": "Which document has information on the delivery due date?",
+    "expected_tools": ["search_documents"],
+    "expected_substrings": ["purchase_order", "delivery"]
+  },
+  {
+    "id": "q07",
+    "category": "search",
+    "question": "What is the penalty amount in the NDA? Find it.",
+    "expected_tools": ["search_documents"],
+    "expected_substrings": ["penalty", "50"]
+  },
+  {
+    "id": "q08",
+    "category": "search",
+    "question": "What does the change of control clause contain?",
+    "expected_tools": ["search_documents"],
+    "expected_substrings": ["25", "ownership", "change"]
+  },
+  {
+    "id": "q09",
+    "category": "compare",
+    "question": "Compare the prices of as-2026-001.pdf and as-2026-003.pdf.",
+    "expected_tools": ["get_extraction", "compare_documents"],
+    "expected_substrings": ["differ", "diff", "net"]
+  },
+  {
+    "id": "q10",
+    "category": "compare",
+    "question": "How much more expensive is as-2026-003.pdf compared to as-2026-001.pdf?",
+    "expected_tools": ["get_extraction", "compare_documents"],
+    "expected_substrings": ["differ", "diff"]
+  },
+  {
+    "id": "q11",
+    "category": "compare",
+    "question": "Is there a discrepancy between bi-po-2026-0412.pdf and bi-dn-2026-0415.pdf?",
+    "expected_tools": ["compare_documents"],
+    "expected_substrings": ["HI-100", "differ", "38", "40"]
+  },
+  {
+    "id": "q12",
+    "category": "validate",
+    "question": "Validate the math on as-2026-001.pdf.",
+    "expected_tools": ["validate_document"],
+    "expected_substrings": ["ok", "error", "valid", "math"]
+  },
+  {
+    "id": "q13",
+    "category": "validate",
+    "question": "Is there a math error in adv-inv-2026-0001.pdf?",
+    "expected_tools": ["validate_document"],
+    "expected_substrings": ["adv-inv-2026-0001", "error", "ok"]
+  },
+  {
+    "id": "q14",
+    "category": "validate",
+    "question": "Is the tax ID valid on as-2026-002.pdf?",
+    "expected_tools": ["validate_document"],
+    "expected_substrings": ["tax", "ok", "12-3456789"]
+  }
+]

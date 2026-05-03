@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtuális környezet (nem hordozható)
+.venv/
+venv/
+env/
+ENV/
+
+# Disztribúció
+build/
+dist/
+*.egg-info/
+*.egg
+.eggs/
+
+# Tesztelés
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+
+# Környezeti változók
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Perzisztens runtime adat (auto-generálódik)
+chroma_db/
+data/checkpoints.sqlite
+data/checkpoints.sqlite-*
+*.log
+
+# HuggingFace / sentence-transformers cache
+.cache/
+
+# IDE / OS
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Node (defenzív)
+node_modules/
+
+# Test results
+test_results/

@@ -1,0 +1,46 @@
+{
+  "type": "object",
+  "title": "FinancialReportSchema",
+  "description": "Structured-extraction schema for financial reports (P&L, balance sheet, cash flow).",
+  "properties": {
+    "report_type": {
+      "type": ["string", "null"],
+      "description": "e.g. income_statement (P&L), balance_sheet, cash_flow"
+    },
+    "period_start": { "type": ["string", "null"] },
+    "period_end": { "type": ["string", "null"] },
+    "company_name": { "type": ["string", "null"] },
+    "company_tax_id": { "type": ["string", "null"] },
+    "currency": { "type": "string", "default": "USD" },
+    "accounting_standard": {
+      "type": ["string", "null"],
+      "description": "IFRS, US-GAAP, HU-GAAP, DE-HGB, or other"
+    },
+    "line_items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "description": { "type": "string" },
+          "value": { "type": ["number", "null"] },
+          "value_prior_period": { "type": ["number", "null"] }
+        }
+      }
+    },
+    "revenue": { "type": ["number", "null"] },
+    "operating_income": { "type": ["number", "null"] },
+    "pretax_income": { "type": ["number", "null"] },
+    "tax": { "type": ["number", "null"] },
+    "net_income": { "type": ["number", "null"] },
+    "_quotes": { "type": "array", "items": { "type": "string" } },
+    "_confidence": { "type": "object" },
+    "_source": {
+      "type": "object",
+      "properties": {
+        "file_name": { "type": "string" },
+        "page_number": { "type": ["integer", "null"] }
+      }
+    }
+  },
+  "required": ["_quotes", "_confidence"]
+}

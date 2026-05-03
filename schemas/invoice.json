@@ -1,0 +1,86 @@
+{
+  "type": "object",
+  "title": "InvoiceSchema",
+  "description": "Structured-extraction JSON schema for invoices. Mandatory fields per the relevant national VAT act (e.g. HU VAT Act §169 for Hungarian invoices). _quotes and _confidence are anti-hallucination layers.",
+  "properties": {
+    "invoice_number": {
+      "type": ["string", "null"],
+      "description": "Invoice serial number. If incomplete, use null."
+    },
+    "issue_date": {
+      "type": ["string", "null"],
+      "description": "Issue date in ISO 8601 format (YYYY-MM-DD). Normalize from other formats."
+    },
+    "fulfillment_date": {
+      "type": ["string", "null"],
+      "description": "Fulfillment / service-delivery date in ISO 8601 format (YYYY-MM-DD)."
+    },
+    "payment_due_date": {
+      "type": ["string", "null"],
+      "description": "Payment due date in ISO 8601 format (YYYY-MM-DD)."
+    },
+    "payment_method": {
+      "type": ["string", "null"],
+      "description": "e.g. transfer, cash, card"
+    },
+    "currency": {
+      "type": "string",
+      "description": "ISO 4217 code or well-known: USD, EUR, HUF, GBP, CHF",
+      "default": "USD"
+    },
+    "issuer": {
+      "type": ["object", "null"],
+      "properties": {
+        "name": { "type": ["string", "null"] },
+        "tax_id": { "type": ["string", "null"], "description": "Format depends on jurisdiction (HU: XXXXXXXX-X-XX, US: XX-XXXXXXX EIN, EU: VAT ID)" },
+        "address": { "type": ["string", "null"] }
+      }
+    },
+    "customer": {
+      "type": ["object", "null"],
+      "properties": {
+        "name": { "type": ["string", "null"] },
+        "tax_id": { "type": ["string", "null"] },
+        "address": { "type": ["string", "null"] }
+      }
+    },
+    "line_items": {
+      "type": "array",
+      "description": "Invoice line items",
+      "items": {
+        "type": "object",
+        "properties": {
+          "item_code": { "type": ["string", "null"] },
+          "description": { "type": ["string", "null"] },
+          "quantity": { "type": ["number", "null"] },
+          "unit": { "type": ["string", "null"] },
+          "unit_price_net": { "type": ["number", "null"] },
+          "vat_rate": { "type": ["number", "null"], "description": "As a percentage (e.g. 20)" },
+          "total_net": { "type": ["number", "null"] },
+          "total_vat": { "type": ["number", "null"] },
+          "total_gross": { "type": ["number", "null"] }
+        }
+      }
+    },
+    "total_net": { "type": ["number", "null"] },
+    "total_vat": { "type": ["number", "null"] },
+    "total_gross": { "type": ["number", "null"] },
+    "_quotes": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "ANTI-HALLUCINATION: verbatim document quotes (at least 3 quotes for key fields)"
+    },
+    "_confidence": {
+      "type": "object",
+      "description": "ANTI-HALLUCINATION: per-field reliability: high | medium | low"
+    },
+    "_source": {
+      "type": "object",
+      "properties": {
+        "file_name": { "type": "string" },
+        "page_number": { "type": ["integer", "null"] }
+      }
+    }
+  },
+  "required": ["_quotes", "_confidence"]
+}

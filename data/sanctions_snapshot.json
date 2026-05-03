@@ -1,0 +1,114 @@
+{
+  "metadata": {
+    "source": "EU Consolidated Sanctions List + OFAC SDN (snapshot)",
+    "date": "2026-04-10",
+    "note": "Statikus demo lista -- nem elo API. Frissitendo periodikusan."
+  },
+  "entities": [
+    {
+      "name": "Gazprom",
+      "country": "RU",
+      "type": "entity"
+    },
+    {
+      "name": "Rosneft",
+      "country": "RU",
+      "type": "entity"
+    },
+    {
+      "name": "Sberbank",
+      "country": "RU",
+      "type": "entity"
+    },
+    {
+      "name": "VTB Bank",
+      "country": "RU",
+      "type": "entity"
+    },
+    {
+      "name": "Rostec",
+      "country": "RU",
+      "type": "entity"
+    },
+    {
+      "name": "Almaz-Antey",
+      "country": "RU",
+      "type": "entity"
+    },
+    {
+      "name": "Kalashnikov Concern",
+      "country": "RU",
+      "type": "entity"
+    },
+    {
+      "name": "Russian Direct Investment Fund",
+      "country": "RU",
+      "type": "entity"
+    },
+    {
+      "name": "Novatek",
+      "country": "RU",
+      "type": "entity"
+    },
+    {
+      "name": "Sovcomflot",
+      "country": "RU",
+      "type": "entity"
+    },
+    {
+      "name": "Belaruskali",
+      "country": "BY",
+      "type": "entity"
+    },
+    {
+      "name": "Belneftekhim",
+      "country": "BY",
+      "type": "entity"
+    },
+    {
+      "name": "National Iranian Oil Company",
+      "country": "IR",
+      "type": "entity"
+    },
+    {
+      "name": "Bank Melli Iran",
+      "country": "IR",
+      "type": "entity"
+    },
+    {
+      "name": "Bank Saderat Iran",
+      "country": "IR",
+      "type": "entity"
+    },
+    {
+      "name": "Korea Mining Development Trading Corporation",
+      "country": "KP",
+      "type": "entity"
+    },
+    {
+      "name": "Commercial Bank of Syria",
+      "country": "SY",
+      "type": "entity"
+    },
+    {
+      "name": "Volga Industrial Holdings",
+      "country": "RU",
+      "type": "entity"
+    }
+  ],
+  "high_risk_countries": [
+    "RU",
+    "BY",
+    "IR",
+    "KP",
+    "SY",
+    "CU",
+    "VE",
+    "PA",
+    "VG",
+    "KY",
+    "BZ",
+    "SC",
+    "VU"
+  ]
+}

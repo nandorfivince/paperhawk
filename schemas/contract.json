@@ -1,0 +1,77 @@
+{
+  "type": "object",
+  "title": "ContractSchema",
+  "description": "Structured-extraction schema for business contracts. Covers NDA, service, works contract, lease, MSA, rental. Anti-hallucination layers are mandatory.",
+  "properties": {
+    "contract_type": {
+      "type": ["string", "null"],
+      "description": "e.g. NDA, service, works, lease, MSA, rental, IT framework"
+    },
+    "parties": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": ["string", "null"] },
+          "role": { "type": ["string", "null"], "description": "e.g. supplier, customer, lessee, lessor" },
+          "tax_id": { "type": ["string", "null"] },
+          "address": { "type": ["string", "null"] },
+          "contact": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "effective_date": { "type": ["string", "null"], "description": "ISO 8601 (YYYY-MM-DD)" },
+    "expiry_date": { "type": ["string", "null"], "description": "ISO 8601 (YYYY-MM-DD)" },
+    "total_value": { "type": ["number", "null"], "description": "Contract total value over its full term" },
+    "currency": { "type": "string", "default": "USD" },
+    "monthly_fee": { "type": ["number", "null"] },
+    "monthly_fee_currency": { "type": "string", "default": "USD" },
+    "termination_terms": {
+      "type": ["string", "null"],
+      "description": "Textual summary of the termination conditions"
+    },
+    "termination_period_days": { "type": ["integer", "null"] },
+    "penalty": {
+      "type": ["object", "null"],
+      "properties": {
+        "amount": { "type": ["number", "null"] },
+        "condition": { "type": ["string", "null"] }
+      }
+    },
+    "confidentiality_clause": { "type": ["boolean", "null"] },
+    "governing_law": { "type": ["string", "null"] },
+    "auto_renewal": {
+      "type": ["object", "null"],
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "condition": { "type": ["string", "null"] }
+      }
+    },
+    "change_of_control": { "type": ["boolean", "null"], "description": "Whether the contract contains a change-of-control clause" },
+    "non_compete": { "type": ["boolean", "null"] },
+    "key_clauses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "content": { "type": "string" },
+          "risk_level": { "type": "string", "enum": ["low", "medium", "high"] }
+        }
+      }
+    },
+    "_quotes": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "_confidence": { "type": "object" },
+    "_source": {
+      "type": "object",
+      "properties": {
+        "file_name": { "type": "string" },
+        "page_number": { "type": ["integer", "null"] }
+      }
+    }
+  },
+  "required": ["_quotes", "_confidence"]
+}
