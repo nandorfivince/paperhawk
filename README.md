@@ -2,7 +2,7 @@
 
 > Multi-document due diligence platform with deterministic domain checks
 > and agentic LLM workflows. Powered by **LangGraph + Qwen 2.5** served
-> via vLLM on **AMD Instinct MI300X**.
+> via vLLM on **AMD Instinct MI300X**. 
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 ![Python](https://img.shields.io/badge/python-3.12+-blue.svg)
