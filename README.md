@@ -1,15 +1,24 @@
-# Document Intelligence — Agentic LangGraph (AMD Edition)
+<p align="center">
+  <img src="paperhawk.jpeg" alt="PaperHawk" width="900">
+</p>
 
-> Multi-document due diligence platform with deterministic domain checks
-> and agentic LLM workflows. Powered by **LangGraph + Qwen 2.5** served
-> via vLLM on **AMD Instinct MI300X**. 
+<h1 align="center">PaperHawk</h1>
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-![Python](https://img.shields.io/badge/python-3.12+-blue.svg)
-![LangGraph](https://img.shields.io/badge/LangGraph-0.6-green.svg)
-![AMD MI300X](https://img.shields.io/badge/AMD-MI300X-red.svg)
+<p align="center">
+  <strong>Agentic document intelligence on AMD MI300X</strong><br>
+  Multi-document due diligence with deterministic domain checks and agentic LLM workflows.
+</p>
 
-Built for the **[AMD Developer Hackathon × lablab.ai](https://lablab.ai/event/amd-developer-hackathon)** (May 2026).
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
+  <img src="https://img.shields.io/badge/python-3.12+-blue.svg" alt="Python">
+  <img src="https://img.shields.io/badge/LangGraph-0.6-green.svg" alt="LangGraph">
+  <img src="https://img.shields.io/badge/AMD-MI300X-red.svg" alt="AMD MI300X">
+</p>
+
+<p align="center">
+  Built for the <a href="https://lablab.ai/event/amd-developer-hackathon"><strong>AMD Developer Hackathon × lablab.ai</strong></a> (May 2026).
+</p>
 
 ---
 
@@ -129,7 +138,6 @@ Click the corresponding button on the **Upload** tab.
 - [ARCHITECTURE.md](ARCHITECTURE.md) — architecture overview (English)
 - [docs/qwen-vllm-deployment.md](docs/qwen-vllm-deployment.md) — Qwen on AMD MI300X (English)
 - [docs/hf-space-deployment.md](docs/hf-space-deployment.md) — Hugging Face Space deploy (English)
-- [docs/LANGGRAPH_ONBOARDING.md](docs/LANGGRAPH_ONBOARDING.md) — onboarding for contributors (English)
 - [CLAUDE.md](CLAUDE.md) — project-level Claude Code instructions
 - [NOTICE.md](NOTICE.md) — author intent (non-binding)
 - `docs/Teljes-rendszer-attekintes-langgraph_HU.md` — legacy Hungarian system overview (reference)
