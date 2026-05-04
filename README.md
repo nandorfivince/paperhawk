@@ -1,3 +1,14 @@
+---
+title: PaperHawk
+emoji: 🦅
+colorFrom: red
+colorTo: orange
+sdk: docker
+pinned: false
+license: mit
+short_description: Real-DI-Audit/14 rules/6 anti-halluc/LangGraph/Qwen/MI300X
+---
+
 <p align="center">
   <img src="paperhawk.jpeg" alt="PaperHawk" width="900">
 </p>
@@ -84,8 +95,8 @@ See [ARCHITECTURE.md](ARCHITECTURE.md) for the full architecture.
 ### 1. Local dev (Ollama or dummy mode)
 
 ```bash
-git clone https://github.com/<YOUR_GH_USER>/paperhawk
-cd paperhawk
+git clone https://github.com/<YOUR_GH_USER>/document-intelligence-agentic-langgraph-amd
+cd document-intelligence-agentic-langgraph-amd
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env
@@ -138,6 +149,7 @@ Click the corresponding button on the **Upload** tab.
 - [ARCHITECTURE.md](ARCHITECTURE.md) — architecture overview (English)
 - [docs/qwen-vllm-deployment.md](docs/qwen-vllm-deployment.md) — Qwen on AMD MI300X (English)
 - [docs/hf-space-deployment.md](docs/hf-space-deployment.md) — Hugging Face Space deploy (English)
+- [docs/LANGGRAPH_ONBOARDING.md](docs/LANGGRAPH_ONBOARDING.md) — onboarding for contributors (English)
 - [CLAUDE.md](CLAUDE.md) — project-level Claude Code instructions
 - [NOTICE.md](NOTICE.md) — author intent (non-binding)
 - `docs/Teljes-rendszer-attekintes-langgraph_HU.md` — legacy Hungarian system overview (reference)
