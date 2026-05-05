@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="paperhawk.jpeg" alt="PaperHawk" width="900">
+  <img src="https://raw.githubusercontent.com/nandorfivince/paperhawk/main/paperhawk.jpeg" alt="PaperHawk" width="900">
 </p>
 
 <h1 align="center">PaperHawk</h1>
@@ -62,8 +62,8 @@ specialist nodes (audit / legal / compliance / financial) over a deterministic
 │ _graph       │        │  (5 tools, 17   │       │  (multi-    │
 │ (6 subgraphs)│        │  rule prompt)   │       │  agent      │
 └───────┬──────┘        └─────────────────┘       │  super-     │
-        │                                         │  visor)     │
-        │  ┌─────────────────────────┐            └─────────────┘
+        │                                          │  visor)     │
+        │  ┌─────────────────────────┐             └─────────────┘
         ├──▶ ingest_subgraph         │
         ├──▶ classify (per-doc)      │
         ├──▶ extract_subgraph        │
