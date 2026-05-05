@@ -73,8 +73,8 @@ specialist nodes (audit / legal / compliance / financial) over a deterministic
 │ _graph       │        │  (5 tools, 17   │       │  (multi-    │
 │ (6 subgraphs)│        │  rule prompt)   │       │  agent      │
 └───────┬──────┘        └─────────────────┘       │  super-     │
-        │                                          │  visor)     │
-        │  ┌─────────────────────────┐             └─────────────┘
+        │                                         │  visor)     │
+        │  ┌─────────────────────────┐            └─────────────┘
         ├──▶ ingest_subgraph         │
         ├──▶ classify (per-doc)      │
         ├──▶ extract_subgraph        │
