@@ -19,7 +19,39 @@
 
 ---
 
-## Long Description
+## Long Description (Submission Form — 600-2000 char limit, copy-paste-ready)
+
+> **Use this version when filing the lablab.ai Submission Form Long Description field.** Compact, all key points covered (problem, solution, target audience, USP, performance, market, future), exactly within the 600-2000 character envelope. Char count: **~1880**.
+
+```
+The Problem
+Audit, legal due diligence, tax compliance, and M&A rely on humans reading dozens of documents looking for errors and red flags. A senior auditor needs ~8 hours per 50-page package. ChatGPT/Copilot/Harvey handle one document at a time, hallucinate citations, and lack jurisdiction-specific compliance knowledge.
+
+Our Solution: PaperHawk
+PaperHawk is an agentic multi-document intelligence platform processing 3-50 PDFs simultaneously, detecting cross-document inconsistencies humans miss. It combines:
+- 14 deterministic statutory rules (HU VAT Act §169, ISA 240/320/500, GDPR Art. 28, AML, Ptk. 6:98, Art. 22) hand-coded in Python
+- 6-layer anti-hallucination stack (temperature=0, source quotes, confidence scores, plausibility, LLM-risk filters, quote validator)
+- Multi-agent LangGraph orchestration (4 graphs + 6 subgraphs, 5-tool agentic chat)
+- Cross-document red flag detection (e.g. 57.5% price drift across 3 invoices auto-detected)
+
+Target Audience
+Auditors, lawyers, tax advisors, DD analysts, compliance officers, CFOs, forensic accountants, banking risk teams. EU + Hungarian focus initially.
+
+Why We Win (vs Harvey, ChatPwC, OWL, Copilot)
+These tools handle ONE document well. We handle MANY together — three-way matching, cross-doc consistency, package-level red flags. Plus jurisdiction-specific compliance rules hard-coded, not prompt-engineered. Open-source MIT, self-hostable on AMD MI300X.
+
+Performance
+23.3 sec for 3-document audit (61.7x faster than manual). Qwen 2.5 14B Instruct on AMD MI300X via vLLM (307 t/s prompt, 252 t/s generation, 30.4% prefix cache hit rate).
+
+Market & Future
+EU professional services market ~$280B TAM, document workflows ~$45B SAM, HU/CEE audit beachhead ~$2B SOM. Roadmap: NAV eAFA integration, fraud detection (Benford's Law), partner risk scoring, human-in-the-loop M2M validation. SaaS revenue ($500-2k/seat/month) + on-prem enterprise for Big Four.
+```
+
+---
+
+## Extended Reference Material — Long Description Source (NOT for Submission Form)
+
+> The 10-section detailed write-up below is the **source material** for the demo video voiceover, the slide deck (`docs/slides/PaperHawk_Slides.pdf`), and the technical walkthrough README. **Do not paste this into the Submission Form** — it would exceed the 2000-char limit several times over. Keep it here as the canonical "what we built" reference.
 
 ### The Problem
 
@@ -147,23 +179,94 @@ One codebase, one MIT license, three prize pools.
 | Project Title | DONE | `PaperHawk` |
 | Short Description | DONE | 247 characters, A+C blend |
 | Long Description | DONE | 10 sections, builder-energy tone |
-| Cover Image | DONE | `paperhawk.jpeg` (2048 × 819 px) |
+| Cover Image | DONE | `docs/slides/01_cover.png` (1280 × 720, 16:9) |
+| Slide Presentation | DONE | `docs/slides/PaperHawk_Slides.pdf` (10 slides) |
 | Technology & Category Tags | DONE | 12 tags |
 | Public GitHub Repository | DONE | `github.com/nandorfivince/paperhawk` |
-| Video Presentation | TODO | Demo walkthrough video |
-| Slide Presentation | TODO | 5–8 slide deck |
-| Demo Application URL | TODO | HF Space public URL |
-| HF Space URL | TODO | Under `lablab-ai-amd-developer-hackathon` org |
+| Live HF Space — `Vincsipe/paperhawk` (Plan-B) | DONE | Validated end-to-end 2026-05-05 |
+| Live HF Space — `lablab-ai-amd-developer-hackathon/paperhawk` (Plan-A) | BLOCKED | Org-quota issue, ticket pending |
+| Build-in-Public Posts | TODO at posting time | 4 drafts ready in `docs/social-posts/` |
+| Video Presentation | TODO | Demo walkthrough video (max 3 min) |
+| AMD Developer Experience Feedback | DONE | See section below |
+
+---
+
+## Live Deployment Validation (2026-05-05)
+
+End-to-end live test of the full stack succeeded on **2026-05-05 reggel** with the following measured results:
+
+| Metric | Value |
+|---|---|
+| Audit Demo processing time (3 PDFs) | **23.3 seconds** |
+| Speedup vs manual auditor (24 min estimate) | **61.7×** |
+| vLLM cold-start from snapshot (HF cache preserved) | **~30 seconds** (vs 70 sec clean install) |
+| Prompt throughput | **307 tokens/sec** |
+| Generation throughput | **252 tokens/sec** |
+| Prefix cache hit rate | **30.4%** |
+| Cross-document red flag detected | **57.5% price drift** (78,740 → 124,016 Ft over 3 invoices) |
+| Anti-hallucination quote validator | Caught 4 of 6 hallucinated citations, downgraded confidence |
+| Jurisdictional standards applied | HU VAT Act §169, ISA 500, ISA 320 |
+
+The full pipeline ran from a publicly-deployed Hugging Face Space (`Vincsipe/paperhawk`) through to the AMD MI300X vLLM endpoint and back, with all 14 deterministic domain checks executing and the package-level cross-doc analyzer correctly identifying the price-drift red flag without human prompting.
+
+**Recorded outputs**: 4 win-screenshots (`Screenshot from 2026-05-05 10-07-{15,22,31,37}.png`) usable in the Submission video and slides.
+
+---
+
+## AMD Developer Experience Feedback
+
+Our team had a generally positive experience deploying our agentic document intelligence platform on AMD's stack. Key feedback by component:
+
+### ROCm 7.0
+
+The vLLM 0.17.1 + ROCm 7.0 build was stable out of the box on the Quick Start image. Qwen 2.5 14B Instruct loaded in 17.4 sec to MI300X VRAM (27.6 GB model + 141 GB available KV cache), CUDA graph compilation took 20.5 sec, total cold-start ~70 sec. Production-grade throughput: 307 tokens/sec prompt, 252 tokens/sec generation, 30.4% prefix cache hit rate. The OpenAI-compatible REST endpoint at port 8000 worked transparently. We did not need any ROCm-specific code changes from our development setup — vLLM abstracted everything. **Recommendation**: keep the Quick Start vLLM image fresh; it saved us hours of setup.
+
+### AMD Developer Cloud (DigitalOcean-powered)
+
+**Strengths**:
+
+- $1.99/hour MI300X pricing is fair and predictable
+- The Quick Start vLLM image saved hours of setup (Docker + ROCm + vLLM pre-installed, JupyterLab launched on port 80)
+- 192 GB HBM3 + 141 GB available KV cache — lots of headroom for large-context multi-agent workloads
+- Snapshot-and-destroy workflow excellent for cost control: $0.32/day storage for ~96 GB snapshot, 5-10 min recreate from snapshot, HF model cache preserved inside the Docker container layer means warm restart is ~30 sec instead of cold-start 70 sec
+- Auto-destroy on credit runout (when no payment method) is a built-in safety net we appreciated
+- Free $100 promo credit makes the platform genuinely accessible to hackathon participants
+
+**Pain points and UI improvement opportunities**:
+
+1. Sidebar `GPU Droplets` link in the left navigation routes to the CPU Droplet flow (a clear UI bug — workaround is the homepage `Create a GPU Droplet` card or the top-right `Create` dropdown). We hit this twice in our first hour.
+2. Default region NYC1 was 'out of capacity' for MI300X plan — we had to switch to ATL1 via URL parameter (`?region=atl1`). The region selector on the GPU Droplet creation page does not appear to be exposed in the UI; we found the workaround by inspecting the URL of a successful creation. Adding region availability indicators on the GPU Plan selector would help.
+3. Reboot after `apt-get upgrade` (recommended via Security notice) does not auto-restart the `rocm` Docker container — needed `docker start rocm` manually. Worth documenting in the Quick Start onboarding.
+
+### AMD APIs
+
+We did not use the lower-level ROCm-API or AMD-specific SDKs directly. Our stack was vLLM + OpenAI-compatible REST → all hardware-specific work was abstracted away through standard Python tooling. This is actually a strength: we ran a production-grade paperhawk pipeline (originally developed against Anthropic Claude API) on AMD MI300X with **zero application code changes** — proving the AMD stack via vLLM is a real drop-in alternative for production AI workloads. We changed only environment variables (`LLM_PROFILE`, `VLLM_BASE_URL`, `VLLM_API_KEY`, `VLLM_MODEL`).
+
+### Overall verdict
+
+AMD MI300X via the Developer Cloud is a viable production deployment platform for agentic LLM applications. The Quick Start vLLM image is a major time-saver. The few UI bugs and capacity-region issues are minor compared to the platform's strengths. The combination of $1.99/hour MI300X pricing + snapshot-restore workflow + OpenAI-compatible vLLM endpoint makes this a credible alternative to AWS p4d/p5 or GCP A3 for inference workloads, especially at the price point.
 
 ---
 
 ## Submission URLs (filled at submission time)
 
+### Plan-A (lablab-org admin reagált) — preferred
+
 - **GitHub repo**: https://github.com/nandorfivince/paperhawk
-- **Hugging Face Space**: *(to be added)*
-- **Demo video**: *(to be added)*
-- **Slide deck**: *(to be added)*
-- **Live application URL**: *(same as HF Space URL)*
+- **Hugging Face Space (official)**: https://huggingface.co/spaces/lablab-ai-amd-developer-hackathon/paperhawk
+- **Live application URL**: same as HF Space URL above
+- **Slide deck**: `docs/slides/PaperHawk_Slides.pdf`
+- **Demo video**: *(uploaded at submission time)*
+
+### Plan-B (lablab-org quota unresolved) — fallback
+
+- **GitHub repo**: https://github.com/nandorfivince/paperhawk
+- **Hugging Face Space (working, parallel)**: https://huggingface.co/spaces/Vincsipe/paperhawk
+- **Live application URL**: same as HF Space URL above
+- **Slide deck**: `docs/slides/PaperHawk_Slides.pdf`
+- **Demo video**: *(uploaded at submission time)*
+
+**Plan-B trade-off**: HF Special Prize (Reachy Mini robot + HF PRO + $500 credits) requires the Space to be under the `lablab-ai-amd-developer-hackathon` org. If we ship under `Vincsipe/paperhawk`, we forfeit the HF Special Prize but retain qualification for the four main judging criteria (Presentation, Business Value, Application of Technology, Originality).
 
 ---
 
