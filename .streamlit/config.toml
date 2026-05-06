@@ -1,0 +1,13 @@
+[server]
+# Disable file-watcher to silence transformers/torchvision noise on startup.
+# Streamlit watches ~150 image_processor modules that import torchvision,
+# which we don't install — produces a flood of harmless tracebacks.
+fileWatcherType = "none"
+
+# Disable XSRF + CORS so st.file_uploader works behind the HF Space iframe proxy.
+# The proxy's cross-origin headers trip XSRF protection and block the upload POST.
+enableXsrfProtection = false
+enableCORS = false
+
+# 200 MB upload limit (Streamlit default, explicit for clarity).
+maxUploadSize = 200
