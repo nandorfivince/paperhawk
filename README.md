@@ -70,7 +70,7 @@ A senior auditor needs ~8 hours to thoroughly review a 50-page invoice/contract 
 
 **Public Hugging Face Space** (no signup, runs in browser):
 
-→ <https://huggingface.co/spaces/Vincsipe/paperhawk>
+→ <https://huggingface.co/spaces/lablab-ai-amd-developer-hackathon/paperhawk>
 
 Click **Audit Demo** in the Quick demo section. Three pre-bundled invoices process in ~25 seconds and you'll see the cross-doc 57.5% price drift flag, the 14 deterministic checks, and the auditor-grade citations.
 
