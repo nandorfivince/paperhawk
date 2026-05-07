@@ -156,6 +156,6 @@ MIT — see [`LICENSE`](LICENSE). Use, fork, deploy commercially or non-commerci
 - Vince Nándorfi — lead, LangGraph architecture, AMD adaptation
 - Erika Nagy — silent partner
 - Tamás Vitai
-- Gábor Murcsik
+- Gábor Murcsik 
 
 For the AMD Developer Hackathon × lablab.ai, May 2026.
